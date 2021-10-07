@@ -429,7 +429,7 @@ undefword:
     .int xt_branch
     lbl compile
 suspend_compile:
-    .int xt_nip, xt_nip
+    .int xt_drop2
     .int xt_btick, STATE_INTERPRET, xt_btick, state_var, xt_store
     .int xt_end_word
 
