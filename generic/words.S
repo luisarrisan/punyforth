@@ -476,11 +476,8 @@ defword "type-counted",12,typecounted,REGULAR            // ( addr count -- )
 type_counted_next_char:
     .int xt_dup, xt_branch0
     lbl type_counted_done
+    .int xt_over, xt_plus, xt_fetchbyte, xt_emit
     .int xt_dec
-    .int xt_swap, xt_dup
-    .int xt_fetchbyte, xt_emit
-    .int xt_inc
-    .int xt_swap
     .int xt_branch
     lbl type_counted_next_char
 type_counted_done:
