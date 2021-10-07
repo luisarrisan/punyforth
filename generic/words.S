@@ -21,9 +21,9 @@ defword "4drop",5,"drop4",REGULAR
 
 .ifndef xt_over
 defword "over",4,over,REGULAR /* ( a b -- a b a ) */
-    .int xt_swap
+    .int xt_rpush
     .int xt_dup
-    .int xt_rot
+    .int xt_rpop
     .int xt_swap
     .int xt_end_word
 .endif
