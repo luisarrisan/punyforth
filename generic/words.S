@@ -61,9 +61,13 @@ defword ">",1,gt,REGULAR
 
 .ifndef xt_eq
 defword "=",1,eq,REGULAR
-    .int xt_dup2
-    .int xt_lt, xt_invert, xt_mrot
-    .int xt_swap, xt_lt, xt_invert, xt_and          // !(a < b) and !(b < a)
+    .int xt_xor
+    .int xt_branch0
+    lbl is_equal
+    .int xt_btick, FALSE
+    .int xt_end_word
+is_equal:
+    .int xt_btick, TRUE
     .int xt_end_word
 .endif
 
