@@ -398,6 +398,9 @@ marker: -test-mark
 : test:[
     [ 60 5 + ] literal 65 =assert ;
 
+: test:[2
+    1 if [ 60 5 + ] literal then 65 =assert ;
+
 depth 0= assert
 test
 depth 0= assert
