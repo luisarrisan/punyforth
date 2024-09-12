@@ -21,9 +21,9 @@ defword "4drop",5,"drop4",REGULAR
 
 .ifndef xt_over
 defword "over",4,over,REGULAR /* ( a b -- a b a ) */
-    .int xt_swap
+    .int xt_rpush
     .int xt_dup
-    .int xt_rot
+    .int xt_rpop
     .int xt_swap
     .int xt_end_word
 .endif
@@ -61,9 +61,13 @@ defword ">",1,gt,REGULAR
 
 .ifndef xt_eq
 defword "=",1,eq,REGULAR
-    .int xt_dup2
-    .int xt_lt, xt_invert, xt_mrot
-    .int xt_swap, xt_lt, xt_invert, xt_and          // !(a < b) and !(b < a)
+    .int xt_xor
+    .int xt_branch0
+    lbl is_equal
+    .int xt_btick, FALSE
+    .int xt_end_word
+is_equal:
+    .int xt_btick, TRUE
     .int xt_end_word
 .endif
 
@@ -476,11 +480,8 @@ defword "type-counted",12,typecounted,REGULAR            // ( addr count -- )
 type_counted_next_char:
     .int xt_dup, xt_branch0
     lbl type_counted_done
+    .int xt_over, xt_plus, xt_fetchbyte, xt_emit
     .int xt_dec
-    .int xt_swap, xt_dup
-    .int xt_fetchbyte, xt_emit
-    .int xt_inc
-    .int xt_swap
     .int xt_branch
     lbl type_counted_next_char
 type_counted_done:
